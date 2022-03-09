@@ -1,0 +1,24 @@
+<%- include('header', {title: 'Delivery Homepage'}) %> <%- include('deliveryNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center"><h1>Welcome <%= loggedIn %>!</h1></div>
+  </div>
+  <div class="row my-5 justify-content-center">
+    <div class="col-11 col-lg-10 contentBox pt-4 pb-5 px-5">
+      <div class="row mb-3">
+        <h4 class="text-center">Dashboard Summary</h4>
+      </div>
+      <div class="row gx-5">
+        <% for(let i = 0; i < 3; i += 1){ %>
+          <div class="col-12 col-lg-4 my-1">
+          <div class="p-3 border dashboardAssigned bg-light">
+            <strong><%= dates[i] %></strong></br></br>
+            Delivery Jobs: <%= assignedData[i] %>
+          </div>
+        </div>
+        <% } %> 
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

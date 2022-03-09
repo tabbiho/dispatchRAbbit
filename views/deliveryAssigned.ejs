@@ -1,0 +1,82 @@
+<%- include('header',{title: 'Deliveries Assigned'}) %> <%-
+include('deliveryNavbar') %>
+<div class="container">
+  <div class="row my-5 justify-content-center">
+    <div class="col-11 col-lg-10 contentBox pt-4 pb-2 px-5">
+      <div class="row mb-3">
+        <h4>View other dates</h4>
+        <form>
+          <div class="mb-3">
+            <input type="date" class="form-control" name="view" />
+          </div>
+          <button type="submit" class="btn btn-danger float-end">
+            View date
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="row my-5 justify-content-center">
+    <div class="col-11 col-lg-10 contentBox py-4 px-5">
+      <% if(!orders.length){ %>
+      <div class="row">No delivery jobs found for <%= viewDate %> 👍🏼</div>
+      <% } else { %>
+      <h4>Viewing for <%= viewDate %></h4>
+      <h6>Expected Time: <%= time.totalTimeString %></h6>
+      <div class="row staffSchedule bg-light mb-3 p-2">
+        <div class="col">
+          <div class="row p-2 fw-light fst-italic">Starting: Office</div>
+          <hr class="solid" />
+
+          <% for(let i = 0; i < orders.length; i += 1) { %>
+          <div>
+            <strong
+              >-- Travel Time: <%= time.travelTimes[i] %> minutes --</strong
+            >
+          </div>
+          <div>
+            <div class="row p-2">
+              <div class="col-12 col-sm-6">
+                Customer Name: <%= orders[i].customer_name %>
+              </div>
+              <div class="col-12 col-sm-6">
+                Contact Number: <%= orders[i].contact_number %>
+              </div>
+            </div>
+            <div class="row p-2">
+              <div class="col">Address: <%= orders[i].delivery_address %></div>
+            </div>
+            <div class="row p-2">
+              <div class="col">Preferences: <%= orders[i].preferences %></div>
+            </div>
+            <div class="row p-2">
+              <div class="col">Model Number: <%= orders[i].model_number %></div>
+              <% if(!orders[i].completed){ %>
+              <div class="col">
+                <form action="/markComplete" method="POST">
+                  <input name="query" value="<%= queryDate %>" hidden />
+                  <input name="deliveryID" value="<%= orders[i].id %>" hidden />
+                  <button type="submit" class="btn btn-success float-end">
+                    Mark Complete
+                  </button>
+                </form>
+              </div>
+              <% } %>
+            </div>
+          </div>
+          <hr class="solid" />
+          <% } %>
+          <div>
+            <strong
+              >-- Travel Time: <%= time.travelTimes[time.travelTimes.length - 1]
+              %> minutes --</strong
+            >
+          </div>
+          <div class="row p-2 fw-light fst-italic">Ending: Office</div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

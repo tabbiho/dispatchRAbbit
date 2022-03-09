@@ -1,0 +1,118 @@
+<%- include('header',{title: 'Scheduler'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center">
+      <h1>Scheduling for: Order <%= order.id %></h1>
+    </div>
+  </div>
+
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-9 contentBox p-4">
+      <form>
+        <div class="mb-3">
+          <label for="staff" class="form-label">Select Staff</label>
+          <select class="form-select" id="staff" name="staff" required>
+            <option selected value disabled>
+              -- Please select delivery staff here --
+            </option>
+            <% deliveryStaff.forEach((x)=>{ %>
+            <option value="<%= x.id %>"><%= x.name %></option>
+            <% }) %>
+          </select>
+        </div>
+        <div class="mb-3">
+          <label for="date" class="form-label">Select Date</label>
+          <input
+            type="date"
+            class="form-control"
+            name="date"
+            id="date"
+            required
+          />
+        </div>
+        <button class="btn btn-danger float-end">View Staff Schedule</button>
+      </form>
+    </div>
+  </div>
+  <% if(displaySchedule){ %>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-9 contentBox p-4">
+      <div class="row mb-3">
+        <div class="col-7">
+          <h5>
+            Viewing Schedule for: <%= selectedStaff %> (<%= displayDate %> )
+          </h5>
+        </div>
+        <div class="col text-end">
+          <form class="d-inline">
+            <input name="staff" value="<%= selectedStaffID %>" hidden />
+            <input name="date" value="<%= selectedDate %>" hidden />
+            <input name="position" value="<%= currentPosition - 1 %>" hidden />
+            <button
+              type="submit"
+              class="btn border-dark btn-primary"
+              id="upBtn"
+            >
+              Move Up
+            </button>
+          </form>
+          <form class="d-inline">
+            <input name="staff" value="<%= selectedStaffID %>" hidden />
+            <input name="date" value="<%= selectedDate %>" hidden />
+            <input name="position" value="<%= currentPosition + 1 %>" hidden />
+            <button
+              type="submit"
+              class="btn border-dark btn-success"
+              id="downBtn"
+            >
+              Move Down
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div class="row staffSchedule bg-light mb-3 p-4">
+        <div class="col">
+          <div class="row px-2 fw-light fst-italic">Starting: Office</div>
+
+          <% for(let i = 0; i < time.travelTimes.length; i += 1){ %>
+          <div class="row p-2 fw-bold">
+            -- Travel Time: <%= time.travelTimes[i] %> minutes --
+          </div>
+          <% if(i < addresses.length){ %> <% if(i === currentPosition){ %>
+          <div class="row p-2 currentAssignment">
+            Delivery Stop: <%= addresses[i] %>
+          </div>
+          <% } else { %>
+          <div class="row p-2">Delivery Stop: <%= addresses[i] %></div>
+          <% } %> <% } %> <% } %>
+          <div class="row p-2 fw-light fst-italic">Ending: Office</div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col">Total Time: <%= time.totalTimeString %></div>
+        <div class="col">
+          <form action="/scheduler/assign/<%= order.id %>" METHOD="POST">
+            <input name="date" value="<%= selectedDate %>" hidden />
+            <input name="staffID" value="<%= selectedStaffID %>" hidden />
+            <input name="position" value="<%= currentPosition %>" hidden />
+            <button class="btn btn-danger float-end">Confirm Assignment</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
+<script>
+  const upBtn = document.getElementById("upBtn");
+  const downBtn = document.getElementById("downBtn");
+
+  if (<%= currentPosition === deliveryCount %>) {
+    downBtn.disabled = true;
+  }
+  if (<%= currentPosition === 0 %>) {
+    upBtn.disabled = true;
+  }
+</script>
+<%- include('footer') %>

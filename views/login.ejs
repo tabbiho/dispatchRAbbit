@@ -1,0 +1,66 @@
+<%- include('header',{title: 'Login'}) %>
+<div>
+  <img src="/logos/login_logo.png" alt="dispatchRAbbit logo" width="100%" />
+</div>
+<div class="container mt-5">
+  <div class="row m-4 pt-2 justify-content-evenly">
+    <div class="col-5 p-4 contentBox">
+      <div class="row mb-3"><h4>For Admins</h4></div>
+      <div class="row">
+        <form action="/adminLogin" method="POST">
+          <div class="mb-3">
+            <label for="adminEmail" class="form-label">E-mail Address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="adminEmail"
+              name="adminEmail"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="adminPW" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="adminPW"
+              name="adminPW"
+            />
+          </div>
+          <button type="submit" class="btn btn-danger float-end">
+            Admin Login
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="col-5 p-4 contentBox">
+      <div class="row mb-3"><h4>For Delivery Staff</h4></div>
+      <div class="row">
+        <form action="/deliveryLogin" method="POST">
+          <div class="mb-3">
+            <label for="deliveryEmail" class="form-label">E-mail Address</label>
+            <input
+              type="text"
+              class="form-control"
+              id="deliveryEmail"
+              name="deliveryEmail"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="deliveryPW" class="form-label">Password</label>
+            <input
+              type="password"
+              class="form-control"
+              id="deliveryPW"
+              name="deliveryPW"
+            />
+          </div>
+          <button type="submit" class="btn btn-secondary float-end">
+            Delivery Login
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

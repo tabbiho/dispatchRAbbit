@@ -1,0 +1,49 @@
+<%- include('header',{title: 'Order View'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center"><h1>Viewing: Order <%= order.id %></h1></div>
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-8 contentBox p-4">
+      <div class="row mb-3">
+        <div class="col">
+          Order Date: <%= moment(order.order_date).format('Do MMM YYYY') %>
+        </div>
+      </div>
+      <h4 class="mt-4">Customer Information</h4>
+      <div class="row dashboardAssigned bg-light px-1 py-3">
+        <div class="row mb-3">
+          <div class="col-8">Customer Name: <%= order.customer_name %></div>
+          <div class="col">Contact Number: <%= order.contact_number %></div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-8">
+            Delivery Address: <%= order.delivery_address %>
+          </div>
+          <div class="col">Unit Number: <%= order.delivery_unit %></div>
+        </div>
+        <div class="row">
+          <div class="col">Zipcode: <%= order.delivery_zipcode %></div>
+        </div>
+      </div>
+      <hr />
+      <h4 class="mt-4">Product Information</h4>
+      <div class="row dashboardAssigned bg-light px-1 py-3">
+        <div class="row mb-3">
+          <div class="col-8">Model Number: <%= order.model_number %></div>
+          <div class="col">Weight: <%= order.weight_kg %>KG</div>
+        </div>
+        <div class="row mb-3">
+          <div class="col-8">
+            Dimensions(L x W x H): <%= order.dimensions_lwh %>
+          </div>
+          <div class="col">Retail Price: $<%= order.retail_price %></div>
+        </div>
+        <div class="row">
+          <div class="col">Preference: <%= order.preferences %></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

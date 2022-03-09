@@ -1,0 +1,114 @@
+<%- include('header',{title: 'Edit Order'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center"><h1>Editing: Order <%= order.id %></h1></div>
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-8 contentBox p-4">
+      <form action="/ordersList/edit/<%= order.id %>?_method=PUT" METHOD="POST">
+        <div class="mb-3">
+          <label for="orderDate" class="form-label">Order Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="orderDate"
+            name="orderDate"
+            value="<%= moment(order.order_date).format('YYYY-MM-DD') %>"
+          />
+        </div>
+        <h4 class="mt-4">Customer Information</h4>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="customerName" class="form-label">Customer Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="customerName"
+              name="customerName"
+              value="<%= order.customer_name %>"
+            />
+          </div>
+          <div class="col">
+            <label for="contactNumber" class="form-label">Contact Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="contactNumber"
+              name="contactNumber"
+              value="<%= order.contact_number %>"
+            />
+          </div>
+        </div>
+        <input name="customerID" value="<%= order.customers_id %>" hidden />
+        <div class="row mb-3">
+          <div class="col">
+            <label for="zipcode" class="form-label">Zipcode</label>
+            <input
+              type="text"
+              class="form-control"
+              id="zipcode"
+              name="zipcode"
+              value="<%=order.delivery_zipcode%>"
+            />
+          </div>
+          <div class="col">
+            <label for="unit" class="form-label">Unit Number</label>
+            <div class="input-group">
+              <span class="input-group-text" id="addon">#</span>
+              <input
+                type="text"
+                class="form-control"
+                id="unit"
+                name="unit"
+                value="<%= order.delivery_unit %>"
+                aria-describedby="addon"
+              />
+            </div>
+          </div>
+        </div>
+        <hr />
+        <h4 class="mt-4">Product Information</h4>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="model" class="form-label">Model Number</label>
+            <select class="form-select" id="model" name="model" required>
+              <option selected value disabled>
+                -- Please select model number here --
+              </option>
+              <% modelsData.forEach((x)=>{ %>
+              <option value="<%= x.id %>">
+                Model <%= x.model_number %> (LWH: <%= x.dimensions_lwh %>)
+              </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+        <div class="row mb-3">
+          <div class="col">
+            <label for="preference" class="form-label">Preferences</label>
+            <input
+              type="text"
+              class="form-control"
+              id="preference"
+              name="preference"
+              value="<%= order.preferences %>"
+            />
+          </div>
+        </div>
+        <button type="submit" class="btn btn-danger">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  const value = "<%= order.model_number %>";
+  const selectBox = document.getElementById("model");
+
+  for (let i, j = 0; (i = selectBox.options[j]); j += 1) {
+    if (i.innerHTML.includes(value)) {
+      selectBox.selectedIndex = j;
+      break;
+    }
+  }
+</script>
+<%- include('footer') %>

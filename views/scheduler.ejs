@@ -1,0 +1,67 @@
+<%- include('header',{title: 'Scheduler'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center"><h1>Scheduler</h1></div>
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-9 contentBox p-4">
+      <h4>List of Unassigned Orders</h4>
+      <div class="row staffSchedule bg-light p-3">
+        <div class="col">
+          <div class="row fw-bold">
+            <div class="col-2">Order ID</div>
+            <div class="col-2">Order Date</div>
+            <div class="col-1">Model</div>
+            <div class="col-5">Address</div>
+            <div class="col">Assignment</div>
+          </div>
+          <% orders.forEach((x)=>{ %> <% if(!x.assigned){ %>
+          <div class="row">
+            <div class="col-2">Order <%= x.id %></div>
+            <div class="col-2">
+              <%= moment(x.order_date).format('Do MMM YYYY') %>
+            </div>
+            <div class="col-1"><%= x.model_number %></div>
+            <div class="col-5"><%= x.delivery_address %></div>
+            <div class="col">
+              <a href="/scheduler/assign/<%= x.id %>">Assign Delivery</a>
+            </div>
+          </div>
+          <% }%> <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-9 contentBox p-4">
+      <h4>List of Assigned Orders</h4>
+      <div class="row staffSchedule bg-light p-3">
+        <div class="col">
+          <div class="row fw-bold">
+            <div class="col-2">Order ID</div>
+            <div class="col-2">Order Date</div>
+            <div class="col-1">Model</div>
+            <div class="col-5">Address</div>
+            <div class="col">Assignment</div>
+          </div>
+          <% orders.forEach((x)=>{ %> <% if(x.assigned){ %>
+          <div class="row">
+            <div class="col-2">Order <%= x.id %></div>
+            <div class="col-2">
+              <%= moment(x.order_date).format('Do MMM YYYY') %>
+            </div>
+            <div class="col-1"><%= x.model_number %></div>
+            <div class="col-5"><%= x.delivery_address %></div>
+            <div class="col">
+              <% if(x.completed){ %> Completed <% } else { %>
+              <a href="/scheduler/unassign/<%= x.id %>">Unassign Delivery</a>
+              <% }%>
+            </div>
+          </div>
+          <% }%> <% }) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

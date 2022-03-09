@@ -1,0 +1,47 @@
+<%- include('header',{title: 'View Schedule'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center">
+      <h1>Viewing Schedule for <%= date %></h1>
+    </div>
+  </div>
+  <% staff.forEach((x)=>{ %>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-8 contentBox p-4">
+      <h4><%= x %></h4>
+      <% if(!deliveries[x].length){ %>
+      <div class="row staffSchedule bg-light">
+        <div class="col">
+          There are no deliveries assigned to this staff for this date.
+        </div>
+      </div>
+      <% } else { %>
+      <div class="row staffSchedule bg-light p-2">
+        <div class="row">
+          <div class="col-2"><strong>Model</strong></div>
+          <div class="col-8"><strong>Delivery Address</strong></div>
+          <div class="col-2"><strong>Status</strong></div>
+        </div>
+        <div class="row">
+          <div class="col py-3">
+            <% for(let i = 0; i < deliveries[x].length; i += 1){ %>
+            <div class="row">
+              <div class="col-2"><%= deliveries[x][i].model_number %></div>
+              <div class="col-8"><%= deliveries[x][i].delivery_address %></div>
+              <div class="col-2">
+                <% if(deliveries[x][i].completed){ %> Completed <% } else { %>
+                In-Progress <% } %>
+              </div>
+            </div>
+            <% if(i !== deliveries[x].length - 1){ %>
+            <hr class="solid" />
+            <% } %> <% } %>
+          </div>
+        </div>
+      </div>
+      <% } %>
+    </div>
+  </div>
+  <% }) %>
+</div>
+<%- include('footer') %>

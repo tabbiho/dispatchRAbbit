@@ -1,0 +1,154 @@
+<%- include('header',{title: 'Create Order'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center"><h1>Create New Order</h1></div>
+  </div>
+  <div class="row justify-content-center">
+    <div class="col-11 col-lg-8 contentBox p-4 mb-5">
+      <form action="/order" method="POST" class="needs-validation" novalidate>
+        <h4 class="mb-3">Customer Details</h4>
+        <div class="mb-3">
+          <label for="address" class="form-label">Delivery Address</label>
+          <input
+            class="form-control"
+            id="address"
+            name="address"
+            readonly
+            value="<%= zipData.ADDRESS %>"
+          />
+        </div>
+        <div class="row mb-3 justify-content-between">
+          <div class="col-3">
+            <label for="unit" class="form-label">Unit Number (optional)</label>
+            <div class="input-group">
+              <span class="input-group-text" id="addon">#</span>
+              <input
+                type="text"
+                class="form-control"
+                id="unit"
+                name="unit"
+                aria-describedby="addon"
+                aria-describedby="unitHelp"
+              />
+            </div>
+            <div id="unitHelp" class="form-text">e.g. 12-345</div>
+          </div>
+          <input name="zipcode" value="<%= zipData.POSTAL %>" hidden />
+          <input
+            name="longLat"
+            value="<%= zipData.LATITUDE %>,<%= zipData.LONGITUDE %>"
+            hidden
+          />
+          <div class="col-6">
+            <label for="contact" class="form-label">Contact Number</label>
+            <input
+              type="text"
+              class="form-control"
+              id="contact"
+              name="contact"
+              required
+            />
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="customerName" class="form-label">Customer Name</label>
+          <input
+            class="form-control"
+            id="customerName"
+            name="customerName"
+            required
+          />
+        </div>
+        <h4 class="mt-5 mb-3">Order Details</h4>
+        <div class="mb-3">
+          <label for="orderDate" class="form-label">Order Date</label>
+          <input
+            type="date"
+            class="form-control"
+            id="orderDate"
+            name="orderDate"
+            max="<%= date %>"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="preference" class="form-label"
+            >Preferences (if any)</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id="preference"
+            name="preference"
+          />
+        </div>
+        <div id="modelDiv">
+          <div class="mb-4" id="modelTemplate">
+            <label for="model" class="form-label">Model Number</label>
+            <select class="form-select" id="model" name="model" required>
+              <option selected value disabled>
+                -- Please select model number here --
+              </option>
+              <% modelsData.forEach((x)=>{ %>
+              <option value="<%= x.id %>">
+                Model <%= x.model_number %> (LWH: <%= x.dimensions_lwh %>)
+              </option>
+              <% }) %>
+            </select>
+          </div>
+        </div>
+        <div class="row justify-content-end">
+          <div class="col-12">
+            <button
+              type="button"
+              class="btn btn-secondary float-end ms-2"
+              id="removeBtn"
+            >
+              Remove Order
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary float-end"
+              id="moreBtn"
+            >
+              Add More Orders
+            </button>
+          </div>
+          <div class="col-12 mt-2"></div>
+        </div>
+
+        <button type="submit" class="btn btn-danger">Submit Order</button>
+      </form>
+    </div>
+  </div>
+</div>
+<script src="/more.js"></script>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function () {
+    "use strict";
+    window.addEventListener(
+      "load",
+      function () {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName("needs-validation");
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function (form) {
+          form.addEventListener(
+            "submit",
+            function (event) {
+              if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      },
+      false
+    );
+  })();
+</script>
+<%- include('footer') %>

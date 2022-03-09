@@ -1,0 +1,63 @@
+<%- include('header',{title: 'Admin Homepage'}) %> <%- include('adminNavbar') %>
+<div class="container">
+  <div class="row my-4">
+    <div class="col text-center"><h1>Welcome <%= loggedIn %>!</h1></div>
+  </div>
+  <div class="row my-3 justify-content-center">
+    <div class="col-11 col-lg-6 contentBox p-4">
+      <div class="row mb-3">
+        <h4 class="text-center">Summary of Unassigned Deliveries</h4>
+      </div>
+      <div class="dashboardAssigned bg-light p-2 px-4">
+      <% if(Object.keys(unassigned).length !== 0){ %>
+      <div class="row fw-bold">
+        <div class="col">Order Date</div>
+        <div class="col">Number of Orders</div>
+      </div>
+      <% for(let i = 0; i < Object.keys(unassigned).length; i += 1){ %>
+      <div class="row">
+        <div class="col">
+          <%= Object.keys(unassigned)[i] %>
+        </div>
+        <div class="col"><%= Object.values(unassigned)[i] %></div>
+      </div>
+      <% } } else { %>
+      <div class="row">
+        <div class="col text-center">
+          Awesome! There are no outstanding unassigned deliveries at the moment
+          👍🏼
+        </div>
+      </div>
+      <% }%>
+      </div>
+    </div>
+  </div>
+  <div class="row my-5 justify-content-center">
+    <div class="col-11 col-lg-10 contentBox pt-4 pb-5 px-5">
+      <div class="row mb-3">
+        <h4 class="text-center">Dashboard Summary</h4>
+      </div>
+      <div class="row gx-5">
+        <% for(let i = 0; i < assignedData.length; i += 1){ %>
+          <div class="col">
+          <div class="p-3 border dashboardAssigned bg-light">
+            <strong><%= dates[i] %></strong></br></br>
+            Deliveries Assigned: <%= assignedData[i] %></br>
+            Deliveries Completed: <%= completed[i] %></br>
+            <a class="btn btn-secondary mt-2" href="/scheduleView/<%= datesQueryFormat[i] %> ">View</a>
+          </div>
+        </div>
+        <% } %>
+      </div>
+      <form class="row row-cols-lg-auto g-3 mt-4 align-items-center justify-content-end" action="/scheduleView" method="POST">
+        <div>
+          <input type="date" id="viewDate" name="viewDate" class="form-control" required>
+        </div>
+        <div>
+         <button type="submit" class="btn btn-secondary float-end">View more dates</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<%- include('footer') %>

@@ -1,0 +1,15 @@
+<%- include('header',{title: 'Login Error'}) %>
+<div>
+  <img src="/logos/login_logo.png" alt="dispatchRAbbit logo" width="100%" />
+</div>
+<div class="container mt-5">
+  <div class="row m-4 pt-2 justify-content-evenly">
+    <div class="col-5 p-4 contentBox">
+      You have entered an invalid Email-Address and Password.
+      <a href="#" onclick="history.go(-1)" class="btn btn-secondary mt-3"
+        >Return & Try Again</a
+      >
+    </div>
+  </div>
+  <%- include('footer') %>
+</div>

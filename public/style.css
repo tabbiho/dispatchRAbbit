@@ -1,0 +1,45 @@
+.hidden {
+  display: none;
+}
+
+.navbar {
+  background-color: #c96868;
+}
+
+.nav-link {
+  font-size: 1.4rem;
+  color: #eafff8 !important;
+}
+
+.nav-link:hover {
+  background-color: #964d4d;
+  border-radius: 10px;
+}
+
+.contentBox {
+  border-radius: 10px;
+  background-color: #d37a7a;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-text {
+  color: rgb(70, 70, 70);
+}
+
+.dashboardAssigned {
+  border-radius: 10px;
+}
+
+.staffSchedule {
+  border-radius: 10px;
+}
+
+.currentAssignment {
+  border-radius: 10px;
+  background-color: #e78585;
+}
